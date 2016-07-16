@@ -6,39 +6,39 @@ class PerPage {
 		$this->perpage = 2;
 	}
 	
-	function perpage($count,$href) {
+	function perpage($count,$href,$thistable) {
 		$output = '';
-		if(!isset($_GET["page"])) $_GET["page"] = 1;
+		if(!isset($_GET['page']) || $thistable<>$_POST['operatingontable']) $page = 1; else $page=$_GET['page'];
 		if($this->perpage != 0)
 			$pages  = ceil($count/$this->perpage);
 		if($pages>1) {
-			if(($_GET["page"]-3)>0) {
-				if($_GET["page"] == 1)
-					$output = $output . '<span id=1 class="current-page">1</span>';
+			if(($page-3)>0) {
+				if($page == 1)
+					$output = $output . '<span id="'.$thistable.'_p1" class="current-page">1</span>';
 				else				
-					$output = $output . '<input type="button" class="perpage-link" onclick="getresult(\'' . $href . '1\')" value=1 />';
+					$output = $output . '<input type="button" class="perpage-link" onclick="getresult(\'' . $href . '1\',\''.$thistable.'\')" value=1 />';
 			}
-			if(($_GET["page"]-3)>1) {
+			if(($page-3)>1) {
 					$output = $output . '...';
 			}
 			
-			for($i=($_GET["page"]-2); $i<=($_GET["page"]+2); $i++)	{
+			for($i=($page-2); $i<=($page+2); $i++)	{
 				if($i<1) continue;
 				if($i>$pages) break;
-				if($_GET["page"] == $i)
-					$output = $output . '<span id='.$i.' class="current-page">'.$i.'</span>';
+				if($page == $i)
+					$output = $output . '<span id='.$thistable.'_p'.$i.' class="current-page">'.$i.'</span>';
 				else				
-					$output = $output . '<input type="button" class="perpage-link" onclick="getresult(\'' . $href . $i . '\')"  value=' . $i . ' />';
+					$output = $output . '<input type="button" class="perpage-link" onclick="getresult(\'' . $href . $i . '\',\''.$thistable.'\')"  value=' . $i . ' />';
 			}
 			
-			if(($pages-($_GET["page"]+2))>1) {
+			if(($pages-($page+2))>1) {
 				$output = $output . '...';
 			}
-			if(($pages-($_GET["page"]+2))>0) {
-				if($_GET["page"] == $pages)
-					$output = $output . '<span id=' . ($pages) .' class="current">' . ($pages) .'</span>';
+			if(($pages-($page+2))>0) {
+				if($page == $pages)
+					$output = $output . '<span id='.$thistable.'_p' . ($pages) .' class="current">' . ($pages) .'</span>';
 				else				
-					$output = $output . '<input type="button"  class="perpage-link" onclick="getresult(\'' . $href .  ($pages) .'\')"  value=' . $pages . ' />';
+					$output = $output . '<input type="button"  class="perpage-link" onclick="getresult(\'' . $href .  ($pages) .'\',\''.$thistable.'\')"  value=' . $pages . ' />';
 			}			
 		}
 		return $output;

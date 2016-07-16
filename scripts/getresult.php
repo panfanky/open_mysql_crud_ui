@@ -77,9 +77,9 @@ foreach($cols[$thistable] as $col){
 
 $orderby = " ORDER BY $ordercol $orderdir";
 $sql = "SELECT * FROM $thistable " . $queryCondition;
-$paginationlink = "getresult.php?page=";					
+$paginationlink = "scripts/getresult.php?page=";					
 $page = 1;
-if(!empty($_GET["page"])) {
+if(!empty($_GET["page"])&&$thistable==$_POST['operatingontable']) {
 $page = $_GET["page"];
 }
 
@@ -94,8 +94,8 @@ $query =  $sql . $orderby .  " limit " . $start . "," . $perPage->perpage;
 $result = $db_handle->runQuery($query);
 
 $rowcount = $db_handle->numRows($sql);
+$perpageresult = $perPage->perpage($rowcount, $paginationlink, $thistable);
 
-$perpageresult = $perPage->perpage($rowcount, $paginationlink);
 ?>
 <form id="frmSearch<?echo$thistable;?>" name="frmSearch<?echo$thistable;?>" method="post" action="index.php">
 			<div class="search-box">
