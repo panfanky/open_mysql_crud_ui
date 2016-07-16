@@ -17,3 +17,11 @@ INSTALLATION
 set the MySQL vars on top of scripts/dbcontroller.php  
 set the desired number of rows per page on top of scripts/pagination.class.php (default: $this->perpage = 2;)  
 run index.php
+
+LICENCE
+-------
+Free even for commercial projects under GPL.
+
+SUPPORT & COLLABORATION
+-------
+Paid work accepted, contact me at jakub (a) webisti cz
