@@ -24,5 +24,5 @@ Free even for commercial projects under GPL.
 
 SUPPORT & COLLABORATION
 -------
-Paid work accepted, contact me at jakub (a) webisti cz
+Paid work accepted, contact me at jakub (a) webisti cz    
 My team's website: http://www.webisti.cz
