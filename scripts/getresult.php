@@ -121,7 +121,7 @@ $perpageresult = $perPage->perpage($rowcount, $paginationlink, $thistable);
 						$neworderdir="desc";	
 						}
 						?>
-						<th><a onclick="getresult('getresult.php?ordertable=<?echo$thistable;?>&ordercol=<?echo$col;?>&orderdir=<?echo$neworderdir;?>')">
+						<th><a onclick="getresult('scripts/getresult.php?ordertable=<?echo$thistable;?>&ordercol=<?echo$col;?>&orderdir=<?echo$neworderdir;?>')">
 						<?
 						if($_GET['ordertable']==$thistable && $ordercol==$col){
 						if($orderdir=="asc"){
