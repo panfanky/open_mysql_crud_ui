@@ -6,7 +6,7 @@
 	<script src="js/functions.js"></script>
 	<script>
 	
-	getresult("getresult.php",'');
+	getresult("scripts/getresult.php",'');
 	
 	</script>
 

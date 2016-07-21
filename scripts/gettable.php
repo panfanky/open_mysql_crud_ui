@@ -5,15 +5,13 @@ require_once("dbcontroller.php");
 require_once("pagination.class.php");
 
 
-//list tables
+$thistable=$_POST['operatingontable'];
+
 
 $db_handle = new DBController();
 $i=0;
 $tabresult = $conn->query ("show tables");
 
-//for each table
-while($row=$tabresult->fetch_row()){
-$thistable=$row[0];
 
 
 if($_GET['ordertable']==$thistable && $_GET['ordercol']!=""){
@@ -29,7 +27,6 @@ if($_GET['ordertable']==$thistable && $_GET['ordercol']!=""){
 
 
 
-echo "<h2>$thistable</h2>";
 	$result_cols = mysqli_query($conn, "SELECT `COLUMN_NAME` FROM `INFORMATION_SCHEMA`.`COLUMNS` WHERE `TABLE_SCHEMA`='$database' AND `TABLE_NAME`='".$thistable."'");
 	while($row_cols=mysqli_fetch_array($result_cols)){
 		$cols[$thistable][]= $row_cols['COLUMN_NAME'];
@@ -73,13 +70,17 @@ foreach($cols[$thistable] as $col){
 // }
 // $queryCondition .= " code LIKE '" . $_POST["code"] . "%'";
 // }
-}
+
+}//search
+
+
+
 
 $orderby = " ORDER BY $ordercol $orderdir";
 $sql = "SELECT * FROM $thistable " . $queryCondition;
-$paginationlink = "scripts/getresult.php?searchintable=$thistable&page=";	
+$paginationlink = "scripts/getresult.php?searchintable=$thistable&page=";					
 $page = 1;
-if(!empty($_GET["page"])&&$thistable==$_POST['operatingontable']) {
+if(!empty($_GET["page"])) {
 $page = $_GET["page"];
 }
 
@@ -96,19 +97,7 @@ $result = $db_handle->runQuery($query);
 $rowcount = $db_handle->numRows($sql);
 $perpageresult = $perPage->perpage($rowcount, $paginationlink, $thistable);
 
-?>
-<form id="frmSearch<?echo$thistable;?>" name="frmSearch<?echo$thistable;?>" method="post" action="index.php">
-			<div class="search-box">
-			<p><input type="hidden" id="rowcount" name="rowcount" value="<?php echo $_GET["rowcount"]; ?>" /><input type="text" placeholder="Search" name="name" class="name demoInputBox" value="<? if($thistable==$_GET['searchintable']) echo $_POST['name']; ?>"	/>
-			<!--
-			former script supported searching in more fields but not live
-			<input type="text" placeholder="Code" name="code" class="code demoInputBox" value="<?php echo $code; ?>"	/>
-			<input type="button" name="go" class="btnSearch" value="Search" onclick="getresult('<?php echo 'scripts/getresult.php'.$paginationlink . $page; ?>&searchintable=<?echo$thistable;?>', '<?echo$thistable;?>')"><input type="reset" class="btnSearch" value="Reset" onclick="window.location='index.php'"></p>
-			-->
-			
-			</div>
-			
-			<table id="tablecalled<?echo$thistable;?>" class="tbl" cellpadding="10" cellspacing="1">
+?>			
 			<thead>
 					<tr>
 
@@ -178,20 +167,4 @@ if(isset($perpageresult)) {
 </tr>
 <?php } ?>
 <tbody>
-</table>
-</form>	
 
-<script>
-$('<?echo"#frmSearch$thistable";?> .name').keyup(function(){
-	gettable('scripts/gettable.php?searchintable=<?echo$thistable;?>', '<?echo$thistable;?>', searchfocus('<?echo$thistable;?>'));
-	
-});
-</script>
-
-<?
-
-//listing tables end
-$i++;
-}
-
-?>

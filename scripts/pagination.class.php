@@ -3,7 +3,7 @@ class PerPage {
 	public $perpage;
 	
 	function __construct() {
-		$this->perpage = 2;
+		$this->perpage = 10;
 	}
 	
 	function perpage($count,$href,$thistable) {
@@ -16,7 +16,7 @@ class PerPage {
 				if($page == 1)
 					$output = $output . '<span id="'.$thistable.'_p1" class="current-page">1</span>';
 				else				
-					$output = $output . '<input type="button" class="perpage-link" onclick="getresult(\'' . $href . '1\',\''.$thistable.'\')" value=1 />';
+					$output = $output . '<input type="button" class="perpage-link" onclick="getresult(\'' . $href . '1\',\''.$thistable.'\', searchfocus(\''.$thistable.'\'))" value=1 />';
 			}
 			if(($page-3)>1) {
 					$output = $output . '...';
@@ -28,7 +28,7 @@ class PerPage {
 				if($page == $i)
 					$output = $output . '<span id='.$thistable.'_p'.$i.' class="current-page">'.$i.'</span>';
 				else				
-					$output = $output . '<input type="button" class="perpage-link" onclick="getresult(\'' . $href . $i . '\',\''.$thistable.'\')"  value=' . $i . ' />';
+					$output = $output . '<input type="button" class="perpage-link" onclick="getresult(\'' . $href . $i . '\',\''.$thistable.'\', searchfocus(\''.$thistable.'\'))"  value=' . $i . ' />';
 			}
 			
 			if(($pages-($page+2))>1) {
@@ -38,7 +38,7 @@ class PerPage {
 				if($page == $pages)
 					$output = $output . '<span id='.$thistable.'_p' . ($pages) .' class="current">' . ($pages) .'</span>';
 				else				
-					$output = $output . '<input type="button"  class="perpage-link" onclick="getresult(\'' . $href .  ($pages) .'\',\''.$thistable.'\')"  value=' . $pages . ' />';
+					$output = $output . '<input type="button"  class="perpage-link" onclick="getresult(\'' . $href .  ($pages) .'\',\''.$thistable.'\', searchfocus(\''.$thistable.'\'))"  value=' . $pages . ' />';
 			}			
 		}
 		return $output;
