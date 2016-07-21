@@ -121,7 +121,11 @@ $perpageresult = $perPage->perpage($rowcount, $paginationlink, $thistable);
 						$neworderdir="desc";	
 						}
 						?>
+<<<<<<< HEAD
 						<th><a onclick="scripts/getresult('scripts/getresult.php?ordertable=<?echo$thistable;?>&ordercol=<?echo$col;?>&orderdir=<?echo$neworderdir;?>')">
+=======
+						<th><a onclick="getresult('scripts/getresult.php?ordertable=<?echo$thistable;?>&ordercol=<?echo$col;?>&orderdir=<?echo$neworderdir;?>')">
+>>>>>>> origin/master
 						<?
 						if($_GET['ordertable']==$thistable && $ordercol==$col){
 						if($orderdir=="asc"){
