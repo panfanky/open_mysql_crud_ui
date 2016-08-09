@@ -13,8 +13,15 @@ $tabresult = $conn->query ("show tables");
 
 //for each table
 while($row=$tabresult->fetch_row()){
-$thistable=$row[0];
 
+$thistable=$row[0];
+$omit="no";
+if($_GET['onlytables']){
+	$onlytables=explode(",",$_GET['onlytables']);
+	if(!in_array($thistable, $onlytables)) $omit="yes";
+	
+}
+if($omit=="no"){
 
 if($_GET['ordertable']==$thistable && $_GET['ordercol']!=""){
 //orderby clause should be protected against strange input
@@ -77,7 +84,7 @@ foreach($cols[$thistable] as $col){
 
 $orderby = " ORDER BY $ordercol $orderdir";
 $sql = "SELECT * FROM $thistable " . $queryCondition;
-$paginationlink = "scripts/getresult.php?searchintable=$thistable&page=";	
+$paginationlink = "scripts/getresult.php?onlytables=".$_GET['onlytables']."&searchintable=$thistable&page=";	
 $page = 1;
 if(!empty($_GET["page"])&&$thistable==$_POST['operatingontable']) {
 $page = $_GET["page"];
@@ -121,8 +128,7 @@ $perpageresult = $perPage->perpage($rowcount, $paginationlink, $thistable);
 						$neworderdir="desc";	
 						}
 						?>
-
-						<th><a onclick="getresult('scripts/getresult.php?ordertable=<?echo$thistable;?>&ordercol=<?echo$col;?>&orderdir=<?echo$neworderdir;?>')">
+						<th><a onclick="scripts/getresult('scripts/getresult.php?onlytables=<?echo$_GET['onlytables'];?>&ordertable=<?echo$thistable;?>&ordercol=<?echo$col;?>&orderdir=<?echo$neworderdir;?>')">
 						<?
 						if($_GET['ordertable']==$thistable && $ordercol==$col){
 						if($orderdir=="asc"){
@@ -158,10 +164,11 @@ foreach($result as $k=>$v) {
 <tr class="row-<?php echo $result[$k]['id']; ?>">
 <?
 	for($i=0;$i<$numcols;$i++){
-?>
 
-<td <?if ($cols[$thistable][$i]<>"id")echo'class="editabletd"';?>contenteditable="false" onBlur="saveToDatabase(this,'<?echo$cols[$thistable][$i];?>',<?php echo $result[$k]['id']; ?>,'<?echo$thistable;?>')" onClick="showEdit(this,<?php echo $result[$k]["id"]; ?>, '<?echo$thistable;?>');">
-<?php echo $result[$k][$cols[$thistable][$i]]; ?></td>
+
+//don't split td and /td into lines	
+?>
+<td <?if ($cols[$thistable][$i]<>"id")echo'class="editabletd"';?>contenteditable="false" onBlur="saveToDatabase(this,'<?echo$cols[$thistable][$i];?>',<?php echo $result[$k]['id']; ?>,'<?echo$thistable;?>')" onClick="showEdit(this,<?php echo $result[$k]["id"]; ?>, '<?echo$thistable;?>');"><?php echo nl2br($result[$k][$cols[$thistable][$i]]); ?></td>
 
 <?php
 	}//for (numcols)
@@ -187,10 +194,11 @@ $('<?echo"#frmSearch$thistable";?> .name').keyup(function(){
 	gettable('scripts/gettable.php?searchintable=<?echo$thistable;?>', '<?echo$thistable;?>', searchfocus('<?echo$thistable;?>'));
 	
 });
+
 </script>
 
 <?
-
+}// omit=no
 //listing tables end
 $i++;
 }

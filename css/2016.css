@@ -1,4 +1,4 @@
-body{width:700px;}
+#dbcontainer{width:900px;}
 			
 .search-box {border: 1px solid #F0F0F0;background-color:#C8EEFD;margin: 2px 0px;}
 .demoInputBox {padding: 10px;border: #F0F0F0 1px solid;border-radius: 4px;margin:0px 5px}
@@ -35,4 +35,8 @@ body{width:700px;}
 }
 .orderdesc{
 	display:inline-block;margin-right:4px;width:19px;height:19px;background:url('../img/desc.png');
+}
+
+.loader{
+	background: #FFF url('../img/loaderIcon.gif') no-repeat right!important;
 }

@@ -1,6 +1,7 @@
+var pathtocrud='/open_mysql_crud_ui/';
 	function getresult(url, thistable, callback) {    
 	$.ajax({
-		url: url,
+		url: pathtocrud + url,
 		type: "POST",
 		data:  {name:$("#frmSearch"+thistable+" .name").val(),operatingontable:thistable},
 		success: function(data){ $.when($("#dbcontainer").html(data)).then(function(){if(callback){ callback();}});
@@ -10,7 +11,7 @@
 	}
 	function gettable(url, thistable, callback) {    
 	$.ajax({
-		url: url,
+		url: pathtocrud + url,
 		type: "POST",
 		data:  {name:$("#frmSearch"+thistable+" .name").val(),operatingontable:thistable},
 		success: function(data){ $.when($("#tablecalled"+thistable).html(data)).then(function(){if(callback){ callback();}});
@@ -18,30 +19,27 @@
 	   });
 	   
 	}
-	function add() {
-	var valid = validate();
-	if(valid) {
-		$.ajax({
-			url: "scripts/add.php",
-			type: "POST",
-			data:  {name:$("#add-name").val(),code:$("#add-code").val(),category:$("#category").val(),price:$("#price").val(),stock_count:$("#stock_count").val()},
-			success: function(data){ getresult("scripts/getresult.php",''); }
-		   });
-		}
-	}
 	function showEdit(editableObj,id,thistable) {
 		if($('#tablecalled'+thistable+' .row-'+id).hasClass('beingedited'))
 			$(editableObj).css("background","#FFF");
 	} 
 		
 		function saveToDatabase(editableObj,column,id,thistable) {
-			$(editableObj).css("background","#FFF url('img/loaderIcon.gif') no-repeat right");
+			$(editableObj).addClass("loader");
+			var editval=addslashes($(editableObj).html().replace(/(<br>\s*)+$/,'').replace(/<br>/g, "\n"));
 			$.ajax({
-				url: "scripts/saveedit.php?thistable="+thistable,
+				url: pathtocrud + "scripts/saveedit.php?thistable="+thistable,
 				type: "POST",
-				data:'column='+column+'&editval='+$(editableObj).text().trim()+'&id='+id,
+			//this line removes <br>s at the end and for some reason allows for max <br><br> and not more in the text 
+				data: {
+					'column': column,
+					'editval': editval,
+					'id': id
+				},
 				success: function(data){
+					$(editableObj).removeClass("loader");
 					$(editableObj).css("background","");
+					$(editableObj).html(data.replace(/(\r\n|\n\r|\r|\n)/g, "<br>"));
 				}        
 	   });
 	}
@@ -80,13 +78,13 @@
 	function del(id,thistable) {
 	if(confirm("Really delete row (id:"+id+")?")){
 	$.ajax({
-		url: "scripts/delete.php?id="+id+"&thistable="+thistable,
+		url: pathtocrud + "scripts/delete.php?id="+id+"&thistable="+thistable,
 		type: "POST",
 		success: function(data){
 		// original not-live
 		//  $("#toy-"+id).html('');
 		//live:
-		getresult("scripts/getresult.php",thistable);
+		gettable("scripts/gettable.php",thistable);
 		}
 	
 	   });
@@ -94,10 +92,10 @@
 	}
 	function add(thistable) {
 	$.ajax({
-		url: "scripts/add.php?thistable="+thistable,
+		url: pathtocrud + "scripts/add.php?thistable="+thistable,
 		type: "POST",
 		success: function(data){
-		getresult("scripts/getresult.php", thistable, function(){allowEdit(data, thistable);});
+		gettable("scripts/gettable.php", thistable, function(){allowEdit(data, thistable);});
 		}
 		
 	
@@ -112,6 +110,11 @@
 	$('#frmSearch' + thistable +' .name').val(tmpStr);
 	
 	}
+	
+	function addslashes( str ) {
+    return (str + '').replace(/[\\"']/g, '\\$&').replace(/\u0000/g, '\\0');
+}
+	
 	//not in use
 	// function validate() {
 		// var valid = true;	
@@ -145,3 +148,21 @@
 		// }	
 		// return valid;
 	// }
+	
+	
+	
+$(document).on('paste', function(e) {
+    e.preventDefault();
+    var text = '';
+    if (e.clipboardData || e.originalEvent.clipboardData) {
+	 text = (e.originalEvent || e).clipboardData.getData('text/plain');
+	 
+    } else if (window.clipboardData) {
+      text = window.clipboardData.getData('Text');
+    }
+    if (document.queryCommandSupported('insertText')) {
+      document.execCommand('insertText', false, text);
+    } else {
+      document.execCommand('paste', false, text);
+    }
+});

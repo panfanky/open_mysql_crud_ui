@@ -146,10 +146,10 @@ foreach($result as $k=>$v) {
 <tr class="row-<?php echo $result[$k]['id']; ?>">
 <?
 	for($i=0;$i<$numcols;$i++){
-?>
 
-<td <?if ($cols[$thistable][$i]<>"id")echo'class="editabletd"';?>contenteditable="false" onBlur="saveToDatabase(this,'<?echo$cols[$thistable][$i];?>',<?php echo $result[$k]['id']; ?>,'<?echo$thistable;?>')" onClick="showEdit(this,<?php echo $result[$k]["id"]; ?>, '<?echo$thistable;?>');">
-<?php echo $result[$k][$cols[$thistable][$i]]; ?></td>
+//don't split td and /td into lines
+?>
+<td <?if ($cols[$thistable][$i]<>"id")echo'class="editabletd"';?>contenteditable="false" onBlur="saveToDatabase(this,'<?echo$cols[$thistable][$i];?>',<?php echo $result[$k]['id']; ?>,'<?echo$thistable;?>')" onClick="showEdit(this,<?php echo $result[$k]["id"]; ?>, '<?echo$thistable;?>');"><?php echo nl2br($result[$k][$cols[$thistable][$i]]); ?></td>
 
 <?php
 	}//for (numcols)

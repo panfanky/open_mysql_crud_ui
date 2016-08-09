@@ -3,7 +3,7 @@ class PerPage {
 	public $perpage;
 	
 	function __construct() {
-		$this->perpage = 10;
+		$this->perpage = 6;
 	}
 	
 	function perpage($count,$href,$thistable) {
