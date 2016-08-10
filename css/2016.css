@@ -22,7 +22,7 @@
 
 .current-row{background-color:#B24926;color:#FFF;}
 .current-col{background-color:#1b1b1b;color:#FFF;}
-.tbl{width: 100%;font-size:0.9em;background-color: #f5f5f5;}
+.tbl{width: 100%;font-size:0.9em;background-color: #f5f5f5;overflow-x:auto;display:block;}
 .tbl th.table-header {padding: 5px;text-align: left;padding:10px;}
 /* .tbl tr td {padding:10px;background-color: #FDFDFD;} */
 .tbl th a{cursor:pointer;}

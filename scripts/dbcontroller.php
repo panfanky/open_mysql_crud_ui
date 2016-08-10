@@ -1,4 +1,9 @@
 <?php
+$host = "localhost";
+$user = "";
+$password = "";
+$database = "";
+	
 class DBController {
 	private $host = "localhost";
 	private $user = "";

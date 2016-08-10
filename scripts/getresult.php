@@ -1,6 +1,4 @@
 <?php
-$database="ana";
-
 require_once("dbcontroller.php");
 require_once("pagination.class.php");
 
@@ -28,11 +26,22 @@ if($_GET['ordertable']==$thistable && $_GET['ordercol']!=""){
 	$ordercol=$_GET['ordercol'];
 	$orderdir=$_GET['orderdir'];
 	if(!$orderdir)$orderdir="desc";
+	$orderby = " ORDER BY $ordercol $orderdir";
 }else{
-	$ordercol="id";
+	
+//find primary
+$keyres=$conn->query("SELECT `COLUMN_NAME`
+FROM `information_schema`.`COLUMNS`
+WHERE (`TABLE_SCHEMA` = '$database')
+  AND (`TABLE_NAME` = '$thistable')
+  AND (`COLUMN_KEY` = 'PRI')");
+$r=mysqli_fetch_array($keyres);
+	
+	$ordercol=$r['COLUMN_NAME'];
 	$orderdir="desc";
-	}
+}
 
+$orderby = " ORDER BY $ordercol $orderdir";
 
 
 
@@ -82,7 +91,6 @@ foreach($cols[$thistable] as $col){
 // }
 }
 
-$orderby = " ORDER BY $ordercol $orderdir";
 $sql = "SELECT * FROM $thistable " . $queryCondition;
 $paginationlink = "scripts/getresult.php?onlytables=".$_GET['onlytables']."&searchintable=$thistable&page=";	
 $page = 1;
@@ -160,21 +168,25 @@ $perpageresult = $perPage->perpage($rowcount, $paginationlink, $thistable);
 
 if(!empty($result)) {
 foreach($result as $k=>$v) {
+
+//PRESUPPOSES THE FIRST COL IS PRIMARY KEY!
+$primary=reset($result[$k]);
+
 ?>
-<tr class="row-<?php echo $result[$k]['id']; ?>">
+<tr class="row-<?php echo $primary; ?>">
 <?
 	for($i=0;$i<$numcols;$i++){
 
 
 //don't split td and /td into lines	
 ?>
-<td <?if ($cols[$thistable][$i]<>"id")echo'class="editabletd"';?>contenteditable="false" onBlur="saveToDatabase(this,'<?echo$cols[$thistable][$i];?>',<?php echo $result[$k]['id']; ?>,'<?echo$thistable;?>')" onClick="showEdit(this,<?php echo $result[$k]["id"]; ?>, '<?echo$thistable;?>');"><?php echo nl2br($result[$k][$cols[$thistable][$i]]); ?></td>
+<td <?if ($cols[$thistable][$i]<>"id")echo'class="editabletd"';?>contenteditable="false" onBlur="saveToDatabase(this,'<?echo$cols[$thistable][$i];?>','<?php echo $primary; ?>','<?echo$thistable;?>')" onClick="showEdit(this,'<?php echo $primary; ?>', '<?echo$thistable;?>');"><?php echo nl2br($result[$k][$cols[$thistable][$i]]); ?></td>
 
 <?php
 	}//for (numcols)
 ?>
 <td class="action">
-<a class="btnEditAction" onClick="allowEdit(<?php echo $result[$k]["id"]; ?>, '<?echo$thistable;?>')"></a> <a class="btnDeleteAction" onClick="del(<?php echo $result[$k]["id"].", '".$thistable."'";?>)"></a>
+<a class="btnEditAction" onClick="allowEdit('<?php echo $primary; ?>', '<?echo$thistable;?>')"></a> <a class="btnDeleteAction" onClick="del('<?php echo $primary;?>', '<?echo$thistable;?>')"></a>
 </td>
 </tr>
 <?		
