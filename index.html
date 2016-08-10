@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="description" content="Open mysql crud UI : easy ajax editing interface for mysql tables">
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Open mysql crud UI</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/panfanky/open_mysql_crud_ui">View on GitHub</a>
+
+          <h1 id="project_title">Open mysql crud UI</h1>
+          <h2 id="project_tagline">easy ajax editing interface for mysql tables</h2>
+
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/panfanky/open_mysql_crud_ui/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/panfanky/open_mysql_crud_ui/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <h2>
+<a id="open-mysql-crud-ui" class="anchor" href="#open-mysql-crud-ui" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>OPEN MYSQL CRUD UI</h2>
+
+<p>Lists ALL tables in your MySQL db (for now just bellow one another). The tables are then searchable and editable (CRUD - create,read,update,delete) and you can order them. To be used in a safe administration area. It doesn't allow user (web admin in our case) to add columns etc.<br>
+It is desired to be a easier-to-use alternative to phpmyadmin, which is too complicated to serve a web-admin.<br>
+Editing is saved immediately with ajax. Validation of fields is not supported in this release. </p>
+
+<p>Built upon Vincy's scripts (I extended them from one concrete table to any table), especially<br>
+<a href="http://phppot.com/php/php-mysql-inline-editing-using-jquery-ajax/">http://phppot.com/php/php-mysql-inline-editing-using-jquery-ajax/</a><br>
+and<br>
+<a href="http://phppot.com/php/php-crud-with-search-and-pagination-using-jquery-ajax/">http://phppot.com/php/php-crud-with-search-and-pagination-using-jquery-ajax/</a><br>
+Big thanks!  </p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>INSTALLATION</h2>
+
+<p>set the MySQL vars on top of scripts/dbcontroller.php<br>
+set the desired number of rows per page on top of scripts/pagination.class.php (default: $this-&gt;perpage = 2;)<br>
+run index.php</p>
+
+<h2>
+<a id="licence" class="anchor" href="#licence" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>LICENCE</h2>
+
+<p>Free even for commercial projects under GPL.</p>
+
+<h2>
+<a id="support--collaboration" class="anchor" href="#support--collaboration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SUPPORT &amp; COLLABORATION</h2>
+
+<p>Paid work accepted, contact me at jakub (a) webisti cz<br>
+My team's website: <a href="http://www.webisti.cz">http://www.webisti.cz</a></p>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Open mysql crud UI maintained by <a href="https://github.com/panfanky">panfanky</a></p>
+        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
