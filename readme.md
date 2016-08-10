@@ -11,11 +11,18 @@ and
 http://phppot.com/php/php-crud-with-search-and-pagination-using-jquery-ajax/  
 Big thanks!  
 
+DEMO
+----
+Test it here with two tables:
+
+http://devtests.webisti.cz/open_mysql_crud_ui/
 
 INSTALLATION
 ------------
+Prerequisite: your tables all have an auto increment primary key
+
 set the MySQL vars on top of scripts/dbcontroller.php  
-set the desired number of rows per page on top of scripts/pagination.class.php (default: $this->perpage = 2;)  
+set the desired number of rows per page on top of scripts/pagination.class.php ($this->perpage =YOURNUMBER)  
 run index.php
 
 LICENCE
