@@ -27,6 +27,7 @@ CUSTOMIZATION
 -------------
 set the desired number of rows per page on top of scripts/pagination.class.php ($this->perpage =YOURNUMBER)  
 run index.php
+
 if you need to list only specific tables, edit the call (in index.php) to: getresult("scripts/getresult.php?onlytables=YOURTABLENAME1,YOURTABLENAME2",'');
 
 LICENCE
