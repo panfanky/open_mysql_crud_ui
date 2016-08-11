@@ -21,6 +21,10 @@ INSTALLATION
 ------------
 Prerequisite: your tables all have an auto increment primary key
 
+copy the folder to the root of your website and name it open_mysql_crud_ui 
+OR
+do otherwise and change accordingly var pathtocrud on top of js/functions.js
+
 set the MySQL vars on top of scripts/dbcontroller.php  
 
 run index.php
