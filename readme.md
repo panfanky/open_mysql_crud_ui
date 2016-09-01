@@ -19,7 +19,7 @@ http://devtests.webisti.cz/open_mysql_crud_ui/
 
 INSTALLATION
 ------------
-Prerequisite: your tables all have an auto increment primary key
+Prerequisite: your tables all have an auto increment primary key, called 'id' (lowercase)
 
 copy the folder to the root of your website and name it open_mysql_crud_ui 
 OR
